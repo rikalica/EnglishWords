@@ -3,7 +3,7 @@ package jp.techacademy.rika.hataji.englishwords
 import android.content.Context
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.support.design.widget.Snackbar
+import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 import java.util.HashMap
 
 class LoginActivity : AppCompatActivity() {
-
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mCreateAccountListener: OnCompleteListener<AuthResult>
     private lateinit var mLoginListener: OnCompleteListener<AuthResult>
