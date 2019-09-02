@@ -32,17 +32,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
+            Log.d("AAA", "AAA")
         }
 
         override fun onChildRemoved(p0: DataSnapshot) {
+            Log.d("AAA", "AAA")
 
         }
 
         override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            Log.d("AAA", "AAA")
 
         }
 
         override fun onCancelled(p0: DatabaseError) {
+            Log.d("AAA", "AAA")
 
         }
     }
