@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 //import android.support.v7.widget.Toolbar
 import android.util.Base64
+import android.util.Log
 import android.widget.ListView
 import android.widget.Toolbar
 import com.google.firebase.database.*
@@ -22,23 +23,10 @@ class MainActivity : AppCompatActivity() {
 
     private val mTrackListener = object : ChildEventListener {
         override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-            val map = dataSnapshot.value as Map<String, String>
-            val track = map["words"] ?: ""
+            val track = dataSnapshot.key as String
 
-//            val answerArrayList = ArrayList<Answer>()
-//            val answerMap = map["answers"] as Map<String, String>?
-//            if (answerMap != null) {
-//                for (key in answerMap.keys) {
-//                    val temp = answerMap[key] as Map<String, String>
-//                    val answerBody = temp["body"] ?: ""
-//                    val answerName = temp["name"] ?: ""
-//                    val answerUid = temp["uid"] ?: ""
-//                    val answer = Answer(answerBody, answerName, answerUid, key)
-//                    answerArrayList.add(answer)
-//                }
-//            }
-
-            val tracks = Track(track)
+            Log.d("AAA", "AAA")
+            val tracks = Track("Track" + track)
             mTrackArrayList.add(tracks)
             mAdapter.notifyDataSetChanged()
         }
@@ -147,16 +135,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // ListViewの準備
+        mListView = findViewById(R.id.listView)
+        mAdapter = TrackListAdapter(this)
+        mTrackArrayList = ArrayList<Track>()
+        mAdapter.setQuestionArrayList(mTrackArrayList)
+        mListView.adapter = mAdapter
+        mAdapter.notifyDataSetChanged()
+
         // Firebase
         mDatabaseReference = FirebaseDatabase.getInstance().reference
 
         mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
         mGenreRef!!.addChildEventListener(mTrackListener)
-
-//        // ListViewの準備
-//        mListView = findViewById(R.id.listView)
-//        mAdapter = TrackListAdapter(this)
-//        mTrackArrayList = ArrayList<Track>()
-//        mAdapter.notifyDataSetChanged()
     }
 }
