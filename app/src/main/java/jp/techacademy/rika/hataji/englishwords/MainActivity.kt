@@ -6,16 +6,14 @@ import android.os.Bundle
 import android.util.Base64
 import android.widget.ListView
 import android.widget.Toolbar
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.*
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mToolbar: Toolbar
     private lateinit var mDatabaseReference: DatabaseReference
     private lateinit var mListView: ListView
+    private lateinit var mTrackArrayList: ArrayList<Track>
     private lateinit var mWordArrayList: ArrayList<Word>
     private lateinit var mAdapter: TrackListAdapter
     private var mGenre = 0
@@ -23,6 +21,45 @@ class MainActivity : AppCompatActivity() {
     private var mGenreRef: DatabaseReference? = null
 
     private val mTrackListener = object : ChildEventListener {
+        override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+            val map = dataSnapshot.value as Map<String, String>
+            val track = map["words"] ?: ""
+
+//            val answerArrayList = ArrayList<Answer>()
+//            val answerMap = map["answers"] as Map<String, String>?
+//            if (answerMap != null) {
+//                for (key in answerMap.keys) {
+//                    val temp = answerMap[key] as Map<String, String>
+//                    val answerBody = temp["body"] ?: ""
+//                    val answerName = temp["name"] ?: ""
+//                    val answerUid = temp["uid"] ?: ""
+//                    val answer = Answer(answerBody, answerName, answerUid, key)
+//                    answerArrayList.add(answer)
+//                }
+//            }
+
+            val tracks = Track(track)
+            mTrackArrayList.add(tracks)
+            mAdapter.notifyDataSetChanged()
+        }
+
+        override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
+        }
+
+        override fun onChildRemoved(p0: DataSnapshot) {
+
+        }
+
+        override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+        }
+
+        override fun onCancelled(p0: DatabaseError) {
+
+        }
+    }
+
+    private val mWordListener = object : ChildEventListener {
         override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
             val map = dataSnapshot.value as Map<String, String>
             val num = map["num"] ?: ""
@@ -109,5 +146,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Firebase
+        mDatabaseReference = FirebaseDatabase.getInstance().reference
+
+        mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
+        mGenreRef!!.addChildEventListener(mTrackListener)
+
+//        // ListViewの準備
+//        mListView = findViewById(R.id.listView)
+//        mAdapter = TrackListAdapter(this)
+//        mTrackArrayList = ArrayList<Track>()
+//        mAdapter.notifyDataSetChanged()
     }
 }

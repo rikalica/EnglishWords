@@ -14,18 +14,18 @@ import java.util.ArrayList
 
 class TrackListAdapter(context: Context) : BaseAdapter() {
     private var mLayoutInflater: LayoutInflater
-    private var mWordArrayList = ArrayList<Word>()
+    private var mTrackArrayList = ArrayList<Track>()
 
     init {
         mLayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     }
 
     override fun getCount(): Int {
-        return mWordArrayList.size
+        return mTrackArrayList.size
     }
 
     override fun getItem(position: Int): Any {
-        return mWordArrayList[position]
+        return mTrackArrayList[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -40,7 +40,7 @@ class TrackListAdapter(context: Context) : BaseAdapter() {
         }
 
         val titleText = convertView!!.findViewById<View>(R.id.titleTextView) as TextView
-        titleText.text = mWordArrayList[position].num
+        titleText.text = mTrackArrayList[position].words
 
 //        val nameText = convertView.findViewById<View>(R.id.nameTextView) as TextView
 //        nameText.text = mWordArrayList[position].word
@@ -55,7 +55,7 @@ class TrackListAdapter(context: Context) : BaseAdapter() {
         return convertView
     }
 
-    fun setQuestionArrayList(wordArrayList: ArrayList<Word>) {
-        mWordArrayList = wordArrayList
+    fun setQuestionArrayList(trackArrayList: ArrayList<Track>) {
+        mTrackArrayList = trackArrayList
     }
 }
