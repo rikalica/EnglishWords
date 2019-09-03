@@ -1,5 +1,6 @@
 package jp.techacademy.rika.hataji.englishwords
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 //import android.support.v7.widget.Toolbar
@@ -24,30 +25,21 @@ class MainActivity : AppCompatActivity() {
     private val mTrackListener = object : ChildEventListener {
         override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
             val track = dataSnapshot.key as String
-
-            Log.d("AAA", "AAA")
             val tracks = Track("Track" + track)
             mTrackArrayList.add(tracks)
             mAdapter.notifyDataSetChanged()
         }
 
         override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
-            Log.d("AAA", "AAA")
         }
 
         override fun onChildRemoved(p0: DataSnapshot) {
-            Log.d("AAA", "AAA")
-
         }
 
         override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-            Log.d("AAA", "AAA")
-
         }
 
         override fun onCancelled(p0: DatabaseError) {
-            Log.d("AAA", "AAA")
-
         }
     }
 
@@ -146,6 +138,13 @@ class MainActivity : AppCompatActivity() {
         mAdapter.setQuestionArrayList(mTrackArrayList)
         mListView.adapter = mAdapter
         mAdapter.notifyDataSetChanged()
+
+        mListView.setOnItemClickListener { parent, view, position, id ->
+            // Questionのインスタンスを渡して質問詳細画面を起動する
+            val intent = Intent(applicationContext, WordActivity::class.java)
+            intent.putExtra("question", mTrackArrayList[position])
+            startActivity(intent)
+        }
 
         // Firebase
         mDatabaseReference = FirebaseDatabase.getInstance().reference
