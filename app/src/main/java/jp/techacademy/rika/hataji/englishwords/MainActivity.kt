@@ -3,12 +3,15 @@ package jp.techacademy.rika.hataji.englishwords
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 //import android.support.v7.widget.Toolbar
 import android.util.Base64
 import android.util.Log
 import android.widget.ListView
 import android.widget.Toolbar
 import com.google.firebase.database.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +24,9 @@ class MainActivity : AppCompatActivity() {
     private var mGenre = 0
 
     private var mGenreRef: DatabaseReference? = null
+    private var mTimer: Timer? = null
+    private var mTimerSec = 0.0
+    private var mHandler = Handler()
 
     private val mTrackListener = object : ChildEventListener {
         override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
@@ -140,16 +146,39 @@ class MainActivity : AppCompatActivity() {
         mAdapter.notifyDataSetChanged()
 
         mListView.setOnItemClickListener { parent, view, position, id ->
+            //mTimer = Timer()
+
+            // Firebase
+            mDatabaseReference = FirebaseDatabase.getInstance().reference
+
+            mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
+            mGenreRef!!.addChildEventListener(mTrackListener)
+
             // Questionのインスタンスを渡して質問詳細画面を起動する
-            val intent = Intent(applicationContext, WordActivity::class.java)
-            intent.putExtra("question", mTrackArrayList[position])
-            startActivity(intent)
+            val word_intent = Intent(applicationContext, WordActivity::class.java)
+            word_intent.putExtra("word", mTrackArrayList[position])
+            startActivity(word_intent)
+
+            // Questionのインスタンスを渡して質問詳細画面を起動する
+            val sentence_intent = Intent(applicationContext, SentenceActivity::class.java)
+            sentence_intent.putExtra("sentence", mTrackArrayList[position])
+            startActivity(sentence_intent)
+
+
+
+//            mTimer!!.schedule(object : TimerTask() {
+//                override fun run() {
+//                    mTimerSec += 0.1
+//                    mHandler.post {
+//                    }
+//                }
+//            }, 100, 100) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
         }
 
-        // Firebase
-        mDatabaseReference = FirebaseDatabase.getInstance().reference
-
-        mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
-        mGenreRef!!.addChildEventListener(mTrackListener)
+//        // Firebase
+//        mDatabaseReference = FirebaseDatabase.getInstance().reference
+//
+//        mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
+//        mGenreRef!!.addChildEventListener(mTrackListener)
     }
 }
