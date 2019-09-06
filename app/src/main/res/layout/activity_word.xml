@@ -5,10 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".WordActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/one"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Word"
+            android:id="@+id/word" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Word_mean"
+            android:id="@+id/word_mean" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/two"
+        android:orientation="vertical">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Word"
-        android:id="@+id/word" />
+        android:text="Sentence_word"
+        android:id="@+id/sentence" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Sentence"
+        android:id="@+id/sentence_mean" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
