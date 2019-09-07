@@ -148,11 +148,11 @@ class MainActivity : AppCompatActivity() {
         mListView.setOnItemClickListener { parent, view, position, id ->
             //mTimer = Timer()
 
-            // Firebase
-            mDatabaseReference = FirebaseDatabase.getInstance().reference
-
-            mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
-            mGenreRef!!.addChildEventListener(mTrackListener)
+//            // Firebase
+//            mDatabaseReference = FirebaseDatabase.getInstance().reference
+//
+//            mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
+//            mGenreRef!!.addChildEventListener(mTrackListener)
 
             // Questionのインスタンスを渡して質問詳細画面を起動する
             val word_intent = Intent(applicationContext, WordActivity::class.java)
@@ -175,7 +175,7 @@ class MainActivity : AppCompatActivity() {
 //            }, 100, 100) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
         }
 
-//        // Firebase
+        // Firebase
         mDatabaseReference = FirebaseDatabase.getInstance().reference
 
         mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
