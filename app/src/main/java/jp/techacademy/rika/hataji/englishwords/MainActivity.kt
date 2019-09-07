@@ -159,10 +159,10 @@ class MainActivity : AppCompatActivity() {
             word_intent.putExtra("word", mTrackArrayList[position])
             startActivity(word_intent)
 
-            // Questionのインスタンスを渡して質問詳細画面を起動する
-            val sentence_intent = Intent(applicationContext, SentenceActivity::class.java)
-            sentence_intent.putExtra("sentence", mTrackArrayList[position])
-            startActivity(sentence_intent)
+//            // Questionのインスタンスを渡して質問詳細画面を起動する
+//            val sentence_intent = Intent(applicationContext, SentenceActivity::class.java)
+//            sentence_intent.putExtra("sentence", mTrackArrayList[position])
+//            startActivity(sentence_intent)
 
 
 
@@ -176,9 +176,9 @@ class MainActivity : AppCompatActivity() {
         }
 
 //        // Firebase
-//        mDatabaseReference = FirebaseDatabase.getInstance().reference
-//
-//        mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
-//        mGenreRef!!.addChildEventListener(mTrackListener)
+        mDatabaseReference = FirebaseDatabase.getInstance().reference
+
+        mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
+        mGenreRef!!.addChildEventListener(mTrackListener)
     }
 }
