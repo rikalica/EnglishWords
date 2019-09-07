@@ -56,6 +56,8 @@ class MainActivity : AppCompatActivity() {
             val word = map["word"] ?: ""
             val wordClass = map["wordClass"] ?: ""
             val wordMean = map["wordMean"] ?: ""
+            val sentence = map["sentence"] ?: ""
+            val sentenceMean = map["sentenceMean"] ?: ""
 
 //            val answerArrayList = ArrayList<Answer>()
 //            val answerMap = map["answers"] as Map<String, String>?
@@ -70,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 //                }
 //            }
 
-            val question = Word(num, word, wordClass, wordMean)
+            val question = Word(num, word, wordClass, wordMean, sentence, sentenceMean)
             mWordArrayList.add(question)
             mAdapter.notifyDataSetChanged()
         }
@@ -98,6 +100,8 @@ class MainActivity : AppCompatActivity() {
             val word = map["word"] ?: ""
             val wordClass = map["wordClass"] ?: ""
             val wordMean = map["wordMean"] ?: ""
+            val wordSentence = map["wordSentence"] ?: ""
+            val wordSentenceMean = map["wordSentenceMean"] ?: ""
 
 //            val answerArrayList = ArrayList<Answer>()
 //            val answerMap = map["answers"] as Map<String, String>?
@@ -112,7 +116,7 @@ class MainActivity : AppCompatActivity() {
 //                }
 //            }
 
-            val question = Word(num, word, wordClass, wordMean)
+            val question = Word(num, word, wordClass, wordMean, wordSentence , wordSentenceMean)
             mWordArrayList.add(question)
             mAdapter.notifyDataSetChanged()
         }
@@ -148,21 +152,18 @@ class MainActivity : AppCompatActivity() {
         mListView.setOnItemClickListener { parent, view, position, id ->
             //mTimer = Timer()
 
-//            // Firebase
-//            mDatabaseReference = FirebaseDatabase.getInstance().reference
-//
-//            mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
-//            mGenreRef!!.addChildEventListener(mTrackListener)
+            // Firebase
+            mDatabaseReference = FirebaseDatabase.getInstance().reference
+
+            mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
+            mGenreRef!!.addChildEventListener(mWordListener)
 
             // Questionのインスタンスを渡して質問詳細画面を起動する
             val word_intent = Intent(applicationContext, WordActivity::class.java)
             word_intent.putExtra("word", mTrackArrayList[position])
             startActivity(word_intent)
 
-//            // Questionのインスタンスを渡して質問詳細画面を起動する
-//            val sentence_intent = Intent(applicationContext, SentenceActivity::class.java)
-//            sentence_intent.putExtra("sentence", mTrackArrayList[position])
-//            startActivity(sentence_intent)
+
 
 
 
