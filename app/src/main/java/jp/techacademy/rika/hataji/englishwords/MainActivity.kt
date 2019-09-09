@@ -58,8 +58,8 @@ class MainActivity : AppCompatActivity() {
             val sentence = map["sentence"] ?: ""
             val sentenceMean = map["sentenceMean"] ?: ""
 
-            val question = Word(num, word, wordClass, wordMean, sentence, sentenceMean)
-            mWordArrayList.add(question)
+            val wordList = Word(num, word, wordClass, wordMean, sentence, sentenceMean)
+            mWordArrayList.add(wordList)
             //mTrackListAdapter.notifyDataSetChanged()
         }
 
@@ -143,57 +143,11 @@ class MainActivity : AppCompatActivity() {
 
             mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
             mGenreRef!!.addChildEventListener(mWordListener)
-
-            for(i in mWordArrayList){
-
-                val word_intent = Intent(applicationContext, WordActivity::class.java)
-                word_intent.putExtra("word", mTrackArrayList[position])
-                startActivity(word_intent)
-
-                var num = 0
-                var viewNum = 0
-                mTimer!!.schedule(object : TimerTask() {
-                    override fun run() {
-                        mHandler.post {
-                            when (viewNum) {
-                                0 -> {
-
-                                }
-                                1 -> {
-
-                                }
-                                2 -> {
-
-                                }
-                                3 -> {
-
-                                }
-                                else -> {
-
-                                }
-                            }
-                            viewNum += 1
-                        }
-
-                        //mTimer.cancel();
-                    }
-                }, 100, 100) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
-
-
-            }
-
+            
             // WordActivityのインスタンスを渡して単語スラッシュ画面を起動する
             val word_intent = Intent(applicationContext, WordActivity::class.java)
             word_intent.putExtra("word", mTrackArrayList[position])
             startActivity(word_intent)
-
-//            mTimer!!.schedule(object : TimerTask() {
-//                override fun run() {
-//                    mTimerSec += 0.1
-//                    mHandler.post {
-//                    }
-//                }
-//            }, 100, 100) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
         }
 
         // Firebase
