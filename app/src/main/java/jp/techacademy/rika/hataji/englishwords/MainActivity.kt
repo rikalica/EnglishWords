@@ -20,12 +20,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mListView: ListView
     private lateinit var mTrackArrayList: ArrayList<Track>
     private lateinit var mWordArrayList: ArrayList<Word>
-    private lateinit var mAdapter: TrackListAdapter
+    private lateinit var mTrackListAdapter: TrackListAdapter
     private var mGenre = 0
 
     private var mGenreRef: DatabaseReference? = null
     private var mTimer: Timer? = null
-    private var mTimerSec = 0.0
     private var mHandler = Handler()
 
     private val mTrackListener = object : ChildEventListener {
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             val track = dataSnapshot.key as String
             val tracks = Track("Track" + track)
             mTrackArrayList.add(tracks)
-            mAdapter.notifyDataSetChanged()
+            mTrackListAdapter.notifyDataSetChanged()
         }
 
         override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
@@ -59,22 +58,9 @@ class MainActivity : AppCompatActivity() {
             val sentence = map["sentence"] ?: ""
             val sentenceMean = map["sentenceMean"] ?: ""
 
-//            val answerArrayList = ArrayList<Answer>()
-//            val answerMap = map["answers"] as Map<String, String>?
-//            if (answerMap != null) {
-//                for (key in answerMap.keys) {
-//                    val temp = answerMap[key] as Map<String, String>
-//                    val answerBody = temp["body"] ?: ""
-//                    val answerName = temp["name"] ?: ""
-//                    val answerUid = temp["uid"] ?: ""
-//                    val answer = Answer(answerBody, answerName, answerUid, key)
-//                    answerArrayList.add(answer)
-//                }
-//            }
-
             val question = Word(num, word, wordClass, wordMean, sentence, sentenceMean)
             mWordArrayList.add(question)
-            mAdapter.notifyDataSetChanged()
+            //mTrackListAdapter.notifyDataSetChanged()
         }
 
         override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
@@ -116,9 +102,9 @@ class MainActivity : AppCompatActivity() {
 //                }
 //            }
 
-            val question = Word(num, word, wordClass, wordMean, wordSentence , wordSentenceMean)
-            mWordArrayList.add(question)
-            mAdapter.notifyDataSetChanged()
+            val words = Word(num, word, wordClass, wordMean, wordSentence, wordSentenceMean)
+            mWordArrayList.add(words)
+            mTrackListAdapter.notifyDataSetChanged()
         }
 
         override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
@@ -143,11 +129,11 @@ class MainActivity : AppCompatActivity() {
 
         // ListViewの準備
         mListView = findViewById(R.id.listView)
-        mAdapter = TrackListAdapter(this)
+        mTrackListAdapter = TrackListAdapter(this)
         mTrackArrayList = ArrayList<Track>()
-        mAdapter.setQuestionArrayList(mTrackArrayList)
-        mListView.adapter = mAdapter
-        mAdapter.notifyDataSetChanged()
+        mTrackListAdapter.setQuestionArrayList(mTrackArrayList)
+        mListView.adapter = mTrackListAdapter
+        mTrackListAdapter.notifyDataSetChanged()
 
         mListView.setOnItemClickListener { parent, view, position, id ->
             //mTimer = Timer()
@@ -158,14 +144,48 @@ class MainActivity : AppCompatActivity() {
             mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
             mGenreRef!!.addChildEventListener(mWordListener)
 
-            // Questionのインスタンスを渡して質問詳細画面を起動する
+            for(i in mWordArrayList){
+
+                val word_intent = Intent(applicationContext, WordActivity::class.java)
+                word_intent.putExtra("word", mTrackArrayList[position])
+                startActivity(word_intent)
+
+                var num = 0
+                var viewNum = 0
+                mTimer!!.schedule(object : TimerTask() {
+                    override fun run() {
+                        mHandler.post {
+                            when (viewNum) {
+                                0 -> {
+
+                                }
+                                1 -> {
+
+                                }
+                                2 -> {
+
+                                }
+                                3 -> {
+
+                                }
+                                else -> {
+
+                                }
+                            }
+                            viewNum += 1
+                        }
+
+                        //mTimer.cancel();
+                    }
+                }, 100, 100) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
+
+
+            }
+
+            // WordActivityのインスタンスを渡して単語スラッシュ画面を起動する
             val word_intent = Intent(applicationContext, WordActivity::class.java)
             word_intent.putExtra("word", mTrackArrayList[position])
             startActivity(word_intent)
-
-
-
-
 
 //            mTimer!!.schedule(object : TimerTask() {
 //                override fun run() {
