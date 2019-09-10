@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             // Firebase
             mDatabaseReference = FirebaseDatabase.getInstance().reference
 
-            mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
+            mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH).child(mTrackArrayList[position].words)
             mGenreRef!!.addChildEventListener(mWordListener)
 
             // WordActivityのインスタンスを渡して単語スラッシュ画面を起動する
