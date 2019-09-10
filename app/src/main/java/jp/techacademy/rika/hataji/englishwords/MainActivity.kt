@@ -50,16 +50,21 @@ class MainActivity : AppCompatActivity() {
 
     private val mWordListener = object : ChildEventListener {
         override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-            val map = dataSnapshot.value as Map<String, String>
-            val num = map["num"] ?: ""
-            val word = map["word"] ?: ""
-            val wordClass = map["wordClass"] ?: ""
-            val wordMean = map["wordMean"] ?: ""
-            val sentence = map["sentence"] ?: ""
-            val sentenceMean = map["sentenceMean"] ?: ""
+            val map = dataSnapshot.value as List<Map<String, String>>
 
-            val wordList = Word(num, word, wordClass, wordMean, sentence, sentenceMean)
-            mWordArrayList.add(wordList)
+            for(wordUnity in map) {
+                if(wordUnity != null) {
+                    val num = wordUnity["num"] ?: ""
+                    val word = wordUnity["word"] ?: ""
+                    val wordClass = wordUnity["wordClass"] ?: ""
+                    val wordMean = wordUnity["wordMean"] ?: ""
+                    val sentence = wordUnity["sentence"] ?: ""
+                    val sentenceMean = wordUnity["sentenceMean"] ?: ""
+
+                    val wordList = Word(num, word, wordClass, wordMean, sentence, sentenceMean)
+                    mWordArrayList.add(wordList)
+                }
+            }
             //mTrackListAdapter.notifyDataSetChanged()
         }
 
@@ -67,15 +72,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onChildRemoved(p0: DataSnapshot) {
-
         }
 
         override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-
         }
 
         override fun onCancelled(p0: DatabaseError) {
-
         }
     }
 
@@ -143,7 +145,7 @@ class MainActivity : AppCompatActivity() {
 
             mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
             mGenreRef!!.addChildEventListener(mWordListener)
-            
+
             // WordActivityのインスタンスを渡して単語スラッシュ画面を起動する
             val word_intent = Intent(applicationContext, WordActivity::class.java)
             word_intent.putExtra("word", mTrackArrayList[position])
