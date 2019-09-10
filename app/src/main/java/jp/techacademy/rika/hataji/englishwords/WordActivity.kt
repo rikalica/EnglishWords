@@ -26,6 +26,9 @@ class WordActivity : AppCompatActivity() {
         var num = 0
         var viewNum = 0
 
+        // タイマーの作成
+        mTimer = Timer()
+
         mTimer!!.schedule(object : TimerTask() {
             override fun run() {
                 mHandler.post {
@@ -67,6 +70,6 @@ class WordActivity : AppCompatActivity() {
                     }
                 }
             }
-        }, 100, 100) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
+        }, 10000, 10000) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
     }
 }
