@@ -26,6 +26,9 @@ class WordActivity : AppCompatActivity() {
         var num = 0
         var viewNum = 0
 
+        two.setVisibility(View.GONE)
+        one.setVisibility(View.GONE)
+
         // タイマーの作成
         mTimer = Timer()
 
