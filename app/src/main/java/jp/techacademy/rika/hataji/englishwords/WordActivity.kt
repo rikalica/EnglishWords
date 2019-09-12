@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.ListView
 import android.widget.Toolbar
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_word.*
 import java.util.*
 
@@ -29,6 +30,7 @@ class WordActivity : AppCompatActivity() {
 
         two.setVisibility(View.GONE)
         one.setVisibility(View.GONE)
+        mWordArrayList = extras.get("wordList") as ArrayList<Word>
 
         // タイマーの作成
         mTimer = Timer()

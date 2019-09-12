@@ -75,14 +75,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mWordArrayList = ArrayList<Word>()
-
         // ListViewの準備
         mListView = findViewById(R.id.listView)
         mTrackListAdapter = TrackListAdapter(this)
         mTrackArrayList = ArrayList<Track>()
         mTrackListAdapter.setQuestionArrayList(mTrackArrayList)
         mListView.adapter = mTrackListAdapter
+        mWordArrayList = ArrayList<Word>()
         mTrackListAdapter.notifyDataSetChanged()
 
         mListView.setOnItemClickListener { parent, view, position, id ->
@@ -97,6 +96,7 @@ class MainActivity : AppCompatActivity() {
             // WordActivityのインスタンスを渡して単語スラッシュ画面を起動する
             val word_intent = Intent(applicationContext, WordActivity::class.java)
             word_intent.putExtra("word", mTrackArrayList[position])
+            word_intent.putExtra("wordList", mWordArrayList)
             startActivity(word_intent)
         }
 
