@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private val mTrackListener = object : ChildEventListener {
         override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
             val track = dataSnapshot.key as String
-            val tracks = Track("Track" + track)
+            val tracks = Track("Track" + track, track)
             mTrackArrayList.add(tracks)
             mTrackListAdapter.notifyDataSetChanged()
         }
@@ -59,15 +59,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
+
         }
 
         override fun onChildRemoved(p0: DataSnapshot) {
+
         }
 
         override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
         }
 
         override fun onCancelled(p0: DatabaseError) {
+
         }
     }
 
@@ -90,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             // Firebase
             mDatabaseReference = FirebaseDatabase.getInstance().reference
 
-            mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH).child(mTrackArrayList[position].words)
+            mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH).child(mTrackArrayList[position].num)
             mGenreRef!!.addChildEventListener(mWordListener)
 
             // WordActivityのインスタンスを渡して単語スラッシュ画面を起動する
