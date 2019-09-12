@@ -25,6 +25,7 @@ class WordActivity : AppCompatActivity() {
         val track = extras.get("word") as Track
         var num = 0
         var viewNum = 0
+        var flag = true
 
         two.setVisibility(View.GONE)
         one.setVisibility(View.GONE)
@@ -41,12 +42,15 @@ class WordActivity : AppCompatActivity() {
                             one.setVisibility(View.VISIBLE)
                             word.setVisibility(View.VISIBLE)
                             line_vertical_center.setVisibility(View.VISIBLE)
+                            word.setVisibility(View.VISIBLE)
+                            word_mean.setVisibility(View.INVISIBLE)
                         }
                         1 -> {
                             two.setVisibility(View.GONE)
                             one.setVisibility(View.VISIBLE)
                             word.setVisibility(View.VISIBLE)
                             line_vertical_center.setVisibility(View.VISIBLE)
+                            word.setVisibility(View.VISIBLE)
                             word_mean.setVisibility(View.VISIBLE)
                         }
                         2 -> {
@@ -54,25 +58,35 @@ class WordActivity : AppCompatActivity() {
                             two.setVisibility(View.VISIBLE)
                             sentence.setVisibility(View.VISIBLE)
                             line_horizontal_center.setVisibility(View.VISIBLE)
+                            sentence.setVisibility(View.VISIBLE)
+                            sentence_mean.setVisibility(View.INVISIBLE)
                         }
                         3 -> {
                             one.setVisibility(View.GONE)
                             two.setVisibility(View.VISIBLE)
                             sentence.setVisibility(View.VISIBLE)
                             line_horizontal_center.setVisibility(View.VISIBLE)
+                            sentence.setVisibility(View.VISIBLE)
                             sentence_mean.setVisibility(View.VISIBLE)
 
                             viewNum = 0
+                            flag = false
                             num++
                         }
                     }
-                    viewNum += 1
 
-//                    if(mWordArrayList.size >= num) {
-//                        mTimer!!.cancel()
-//                    }
+                    if(flag == false) {
+                        viewNum = 0
+                        flag = true
+                    } else {
+                        viewNum += 1
+                    }
+
+                    if(mWordArrayList.size <= num) {
+                        mTimer!!.cancel()
+                    }
                 }
             }
-        }, 10000, 10000) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
+        }, 0, 3000) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
     }
 }
