@@ -68,9 +68,9 @@ class WordActivity : AppCompatActivity() {
                     }
                     viewNum += 1
 
-                    if(mWordArrayList.size >= num) {
-                        mTimer!!.cancel()
-                    }
+//                    if(mWordArrayList.size >= num) {
+//                        mTimer!!.cancel()
+//                    }
                 }
             }
         }, 10000, 10000) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
