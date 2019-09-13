@@ -30,7 +30,7 @@ class WordActivity : AppCompatActivity() {
 
         two.setVisibility(View.GONE)
         one.setVisibility(View.GONE)
-        mWordArrayList = extras.get("wordList") as ArrayList<Word>
+        mWordArrayList = intent.getSerializableExtra("wordList") as ArrayList<Word>
 
         // タイマーの作成
         mTimer = Timer()
