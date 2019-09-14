@@ -16,6 +16,7 @@ class WordActivity : AppCompatActivity() {
     private lateinit var mWordArrayList: ArrayList<Word>
 
     private var mTimer: Timer? = null
+    private var mTimerCount: Timer? = null
     private var mHandler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +26,7 @@ class WordActivity : AppCompatActivity() {
         val extras = intent.extras
         val track = extras.get("word") as Track
         var num = 0
+        var numCount = 0
         var viewNum = 0
 
         two.setVisibility(View.GONE)
@@ -33,6 +35,7 @@ class WordActivity : AppCompatActivity() {
 
         // タイマーの作成
         mTimer = Timer()
+        mTimerCount = Timer()
 
         mTimer!!.schedule(object : TimerTask() {
             override fun run() {
@@ -45,6 +48,7 @@ class WordActivity : AppCompatActivity() {
                             line_vertical_center.setVisibility(View.VISIBLE)
                             word.setVisibility(View.VISIBLE)
                             word_mean.setVisibility(View.INVISIBLE)
+
                         }
                         1 -> {
                             two.setVisibility(View.GONE)
@@ -81,6 +85,19 @@ class WordActivity : AppCompatActivity() {
 //                        mTimer!!.cancel()
 //                        mTimer = null
 //                    }
+                }
+            }
+        }, 0, 3000) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
+
+        mTimerCount!!.schedule(object : TimerTask() {
+            override fun run() {
+                mHandler.post {
+
+                    num++
+                    if(mWordArrayList.size <= num) {
+                        mTimer!!.cancel()
+                        mTimer = null
+                    }
                 }
             }
         }, 0, 3000) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
