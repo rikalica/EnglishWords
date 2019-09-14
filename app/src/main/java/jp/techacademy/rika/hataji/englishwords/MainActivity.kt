@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mListView: ListView
     private lateinit var mTrackArrayList: ArrayList<Track>
     private lateinit var mWordArrayList: ArrayList<Word>
+    private lateinit var mTrackArrayMap: Map<String,List<Word>>
     private lateinit var mTrackListAdapter: TrackListAdapter
 
     private var mGenreRef: DatabaseReference? = null
@@ -87,12 +88,15 @@ class MainActivity : AppCompatActivity() {
         mListView.adapter = mTrackListAdapter
         mWordArrayList = ArrayList<Word>()
         mTrackListAdapter.notifyDataSetChanged()
-        
 
-        // Firebase
-        mDatabaseReference = FirebaseDatabase.getInstance().reference
-        mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
-        mGenreRef!!.addChildEventListener(mWordListener)
+        for(track in mTrackArrayList){
+            // Firebase
+            mDatabaseReference = FirebaseDatabase.getInstance().reference
+            mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH).child(track.num)
+            mGenreRef!!.addChildEventListener(mWordListener)
+
+            mTrackArrayMap.put(track.num, mWordArrayList)
+        }
 
         mListView.setOnItemClickListener { parent, view, position, id ->
             // WordActivityのインスタンスを渡して単語スラッシュ画面を起動する
