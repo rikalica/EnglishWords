@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mListView: ListView
     private lateinit var mTrackArrayList: ArrayList<Track>
     private lateinit var mWordArrayList: ArrayList<Word>
-    private lateinit var mTrackArrayMap: Map<String,List<Word>>
+    private val mTrackArrayMap: Map<String,List<Word>> = HashMap<String,List<Word>>()
     private lateinit var mTrackListAdapter: TrackListAdapter
 
     private var mGenreRef: DatabaseReference? = null
@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() {
         mTrackListAdapter.setQuestionArrayList(mTrackArrayList)
         mListView.adapter = mTrackListAdapter
         mWordArrayList = ArrayList<Word>()
-        mTrackArrayMap = java.util.HashMap<String,List<Word>>()
         mTrackListAdapter.notifyDataSetChanged()
 
         for(track in mTrackArrayList){
