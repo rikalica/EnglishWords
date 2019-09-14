@@ -48,7 +48,6 @@ class WordActivity : AppCompatActivity() {
                             line_vertical_center.setVisibility(View.VISIBLE)
                             word.setVisibility(View.VISIBLE)
                             word_mean.setVisibility(View.INVISIBLE)
-
                         }
                         1 -> {
                             two.setVisibility(View.GONE)
@@ -78,9 +77,7 @@ class WordActivity : AppCompatActivity() {
                             num++
                         }
                     }
-
                     viewNum++
-
 //                    if(mWordArrayList.size <= num) {
 //                        mTimer!!.cancel()
 //                        mTimer = null

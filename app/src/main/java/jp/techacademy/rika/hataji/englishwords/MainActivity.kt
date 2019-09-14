@@ -40,21 +40,16 @@ class MainActivity : AppCompatActivity() {
 
     private val mWordListener = object : ChildEventListener {
         override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-            val map = dataSnapshot.value as List<Map<String, String>>
+            val map = dataSnapshot.value as Map<String, String>
+                var num = map["num"] ?: ""
+                var word = map["word"] ?: ""
+                var wordClass = map["wordClass"] ?: ""
+                var wordMean = map["wordMean"] ?: ""
+                var sentence = map["sentence"] ?: ""
+                var sentenceMean = map["sentenceMean"] ?: ""
 
-            for(wordUnity in map) {
-                if(wordUnity != null) {
-                    var num = wordUnity["num"] ?: ""
-                    var word = wordUnity["word"] ?: ""
-                    var wordClass = wordUnity["wordClass"] ?: ""
-                    var wordMean = wordUnity["wordMean"] ?: ""
-                    var sentence = wordUnity["sentence"] ?: ""
-                    var sentenceMean = wordUnity["sentenceMean"] ?: ""
-
-                    var wordList = Word(num, word, wordClass, wordMean, sentence, sentenceMean)
-                    mWordArrayList.add(wordList)
-                }
-            }
+                var wordList = Word(num, word, wordClass, wordMean, sentence, sentenceMean)
+                mWordArrayList.add(wordList)
             //mTrackListAdapter.notifyDataSetChanged()
         }
 
