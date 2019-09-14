@@ -40,17 +40,22 @@ class MainActivity : AppCompatActivity() {
 
     private val mWordListener = object : ChildEventListener {
         override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-            val map = dataSnapshot.value as Map<String, String>
-                var num = map["num"] ?: ""
-                var word = map["word"] ?: ""
-                var wordClass = map["wordClass"] ?: ""
-                var wordMean = map["wordMean"] ?: ""
-                var sentence = map["sentence"] ?: ""
-                var sentenceMean = map["sentenceMean"] ?: ""
+            val map = dataSnapshot.value as List<Map<String, String>>
 
-                var wordList = Word(num, word, wordClass, wordMean, sentence, sentenceMean)
-                mWordArrayList.add(wordList)
-            //mTrackListAdapter.notifyDataSetChanged()
+            for(wordUnity in map) {
+                if (wordUnity != null) {
+                    var num = wordUnity["num"] ?: ""
+                    var word = wordUnity["word"] ?: ""
+                    var wordClass = wordUnity["wordClass"] ?: ""
+                    var wordMean = wordUnity["wordMean"] ?: ""
+                    var sentence = wordUnity["sentence"] ?: ""
+                    var sentenceMean = wordUnity["sentenceMean"] ?: ""
+
+                    var wordList = Word(num, word, wordClass, wordMean, sentence, sentenceMean)
+                    mWordArrayList.add(wordList)
+                    //mTrackListAdapter.notifyDataSetChanged()
+                }
+            }
         }
 
         override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {
@@ -82,16 +87,14 @@ class MainActivity : AppCompatActivity() {
         mListView.adapter = mTrackListAdapter
         mWordArrayList = ArrayList<Word>()
         mTrackListAdapter.notifyDataSetChanged()
+        
+
+        // Firebase
+        mDatabaseReference = FirebaseDatabase.getInstance().reference
+        mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
+        mGenreRef!!.addChildEventListener(mWordListener)
 
         mListView.setOnItemClickListener { parent, view, position, id ->
-            //mTimer = Timer()
-
-            // Firebase
-            mDatabaseReference = FirebaseDatabase.getInstance().reference
-
-            mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH).child(mTrackArrayList[position].num)
-            mGenreRef!!.addChildEventListener(mWordListener)
-
             // WordActivityのインスタンスを渡して単語スラッシュ画面を起動する
             val word_intent = Intent(applicationContext, WordActivity::class.java)
             word_intent.putExtra("word", mTrackArrayList[position])

@@ -26,7 +26,6 @@ class WordActivity : AppCompatActivity() {
         val extras = intent.extras
         val track = extras.get("word") as Track
         var num = 0
-        var numCount = 0
         var viewNum = 0
 
         two.setVisibility(View.GONE)
