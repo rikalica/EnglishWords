@@ -26,7 +26,6 @@ class WordActivity : AppCompatActivity() {
         val track = extras.get("word") as Track
         var num = 0
         var viewNum = 0
-        var flag = true
 
         two.setVisibility(View.GONE)
         one.setVisibility(View.GONE)
@@ -71,21 +70,16 @@ class WordActivity : AppCompatActivity() {
                             sentence.setVisibility(View.VISIBLE)
                             sentence_mean.setVisibility(View.VISIBLE)
 
-                            viewNum = 0
-                            flag = false
+                            viewNum = -1
                             num++
                         }
                     }
 
-                    if(flag == false) {
-                        viewNum = 0
-                        flag = true
-                    } else {
-                        viewNum += 1
-                    }
+                    viewNum++
 
 //                    if(mWordArrayList.size <= num) {
 //                        mTimer!!.cancel()
+//                        mTimer = null
 //                    }
                 }
             }
