@@ -87,6 +87,7 @@ class MainActivity : AppCompatActivity() {
         mTrackListAdapter.setQuestionArrayList(mTrackArrayList)
         mListView.adapter = mTrackListAdapter
         mWordArrayList = ArrayList<Word>()
+        mTrackArrayMap = HashMap<String,List<Word>>()
         mTrackListAdapter.notifyDataSetChanged()
 
         for(track in mTrackArrayList){
