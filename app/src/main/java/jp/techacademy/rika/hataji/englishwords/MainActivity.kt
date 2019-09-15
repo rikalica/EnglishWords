@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mListView: ListView
     private lateinit var mTrackArrayList: ArrayList<Track>
     private lateinit var mWordArrayList: ArrayList<Word>
-    private val mTrackArrayMap: Map<String,List<Word>> = HashMap<String,List<Word>>()
+    private val mTrackArrayMap: HashMap<String,ArrayList<Word>> = HashMap<String,ArrayList<Word>>()
     private lateinit var mTrackListAdapter: TrackListAdapter
 
     private var mGenreRef: DatabaseReference? = null
