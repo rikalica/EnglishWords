@@ -10,6 +10,7 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mDatabaseReference: DatabaseReference
+    private lateinit var mTrackReference: DatabaseReference
     private lateinit var mListView: ListView
     private lateinit var mTrackArrayList: ArrayList<Track>
     private lateinit var mWordArrayList: ArrayList<Word>
@@ -98,8 +99,8 @@ class MainActivity : AppCompatActivity() {
         //データを事前に保存
         for(track in mTrackArrayList){
             // Firebase
-            mDatabaseReference = FirebaseDatabase.getInstance().reference
-            mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH).child(track.num)
+            mTrackReference = FirebaseDatabase.getInstance().reference
+            mGenreRef = mTrackReference.child(ContentsPATH).child(WordsPATH).child(track.num)
             mGenreRef!!.addChildEventListener(mWordListener)
 
             mTrackArrayMap.put(track.num, mWordArrayList)
