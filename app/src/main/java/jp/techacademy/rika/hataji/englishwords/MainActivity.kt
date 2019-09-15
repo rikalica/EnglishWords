@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mWordArrayList: ArrayList<Word>
     private val mTrackArrayMap: HashMap<String,ArrayList<Word>> = HashMap<String,ArrayList<Word>>()
     private lateinit var mTrackListAdapter: TrackListAdapter
+    private lateinit var trackNum : String
 
     private var mGenreRef: DatabaseReference? = null
 
@@ -56,8 +57,8 @@ class MainActivity : AppCompatActivity() {
                     var wordList = Word(num, word, wordClass, wordMean, sentence, sentenceMean)
                     mWordArrayList.add(wordList)
                     //mTrackListAdapter.notifyDataSetChanged()
-                    mTrackArrayMap.put(track.num, mWordArrayList)
                 }
+                mTrackArrayMap.put(trackNum, mWordArrayList)
             }
         }
 
@@ -99,6 +100,7 @@ class MainActivity : AppCompatActivity() {
 
         //データを事前に保存
         for(track in mTrackArrayList){
+            trackNum = track.num
             // Firebase
             mTrackReference = FirebaseDatabase.getInstance().reference
             mGenreRef = mTrackReference.child(ContentsPATH).child(WordsPATH).child(track.num)
