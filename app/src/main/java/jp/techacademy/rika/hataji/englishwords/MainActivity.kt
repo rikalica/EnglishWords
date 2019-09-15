@@ -24,6 +24,16 @@ class MainActivity : AppCompatActivity() {
             val track = dataSnapshot.key as String
             val tracks = Track("Track" + track, track)
             mTrackArrayList.add(tracks)
+
+
+            // Firebase
+            mTrackReference = FirebaseDatabase.getInstance().reference
+            mGenreRef = mTrackReference.child(ContentsPATH).child(WordsPATH).child(tracks.num)
+            mGenreRef!!.addChildEventListener(mWordListener)
+
+            mTrackArrayMap.put(tracks.num, mWordArrayList)
+
+
             mTrackListAdapter.notifyDataSetChanged()
         }
 
@@ -96,15 +106,15 @@ class MainActivity : AppCompatActivity() {
         mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
         mGenreRef!!.addChildEventListener(mTrackListener)
 
-        //データを事前に保存
-        for(track in mTrackArrayList){
-            // Firebase
-            mTrackReference = FirebaseDatabase.getInstance().reference
-            mGenreRef = mTrackReference.child(ContentsPATH).child(WordsPATH).child(track.num)
-            mGenreRef!!.addChildEventListener(mWordListener)
-
-            mTrackArrayMap.put(track.num, mWordArrayList)
-        }
+//        //データを事前に保存
+//        for(track in mTrackArrayList){
+//            // Firebase
+//            mTrackReference = FirebaseDatabase.getInstance().reference
+//            mGenreRef = mTrackReference.child(ContentsPATH).child(WordsPATH).child(track.num)
+//            mGenreRef!!.addChildEventListener(mWordListener)
+//
+//            mTrackArrayMap.put(track.num, mWordArrayList)
+//        }
 
         mListView.setOnItemClickListener { parent, view, position, id ->
             // WordActivityのインスタンスを渡して単語スラッシュ画面を起動する
