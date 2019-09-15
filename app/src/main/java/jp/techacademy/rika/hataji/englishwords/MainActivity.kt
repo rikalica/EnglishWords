@@ -89,6 +89,13 @@ class MainActivity : AppCompatActivity() {
         mWordArrayList = ArrayList<Word>()
         mTrackListAdapter.notifyDataSetChanged()
 
+        // Firebase
+        mDatabaseReference = FirebaseDatabase.getInstance().reference
+
+        mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
+        mGenreRef!!.addChildEventListener(mTrackListener)
+
+        //データを事前に保存
         for(track in mTrackArrayList){
             // Firebase
             mDatabaseReference = FirebaseDatabase.getInstance().reference
@@ -105,11 +112,5 @@ class MainActivity : AppCompatActivity() {
             word_intent.putExtra("wordList", mWordArrayList)
             startActivity(word_intent)
         }
-
-        // Firebase
-        mDatabaseReference = FirebaseDatabase.getInstance().reference
-
-        mGenreRef = mDatabaseReference.child(ContentsPATH).child(WordsPATH)
-        mGenreRef!!.addChildEventListener(mTrackListener)
     }
 }
