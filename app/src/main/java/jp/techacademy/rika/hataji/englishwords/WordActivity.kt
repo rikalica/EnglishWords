@@ -84,18 +84,5 @@ class WordActivity : AppCompatActivity() {
                 }
             }
         }, 0, 3000) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
-
-        mTimerCount!!.schedule(object : TimerTask() {
-            override fun run() {
-                mHandler.post {
-
-                    num++
-                    if(mWordArrayList.size <= num) {
-                        mTimer!!.cancel()
-                        mTimer = null
-                    }
-                }
-            }
-        }, 0, 3000) // 最初に始動させるまで 100ミリ秒、ループの間隔を 100ミリ秒 に設定
     }
 }
